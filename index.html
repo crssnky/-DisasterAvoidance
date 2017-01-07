@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>緊急時用施設検索・案内</title>
+    <!-- Bootstrap -->
+    <link async rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link async href="css/AllInfomation.css" rel="stylesheet">
+    <script async src="https://d3js.org/d3.v4.min.js"></script>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script async src="https://maps.google.com/maps/api/js?key=???????????????????&libraries=geometry"></script>
+    <script defer src="js/jquery.xdomainajax.js"></script>
+    <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script defer src="js/AllInfomation.js"></script>
+</head>
+<body onload="initialize()" onclick="RemoveAbout()">
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container-fluid">
+            <div class="navbar-left" style="float:left">
+                <button type="button" class="btn btn-top btn-sm" style="left:-15px" aria-label="Left Align" onclick="sidebar()">
+                    <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                </button>
+            </div>
+            <div class="navbar-right" style="float:right">
+                <div class="navbar-brand">
+                    <p class="marquee" id="EQInfo">地震情報を受け取れませんでした。</p>
+                </div>
+                <button type="button" class="btn btn-top btn-sm" aria-label="Right Align" data-toggle="modal" data-target="#myModal">
+                    詳細
+                </button>
+            </div>
+        </div>
+    </nav>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document" style="width:80%;">
+            <div class="modal-content" id="modalEQ">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar" id="sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a>設定 <span class="sr-only">(current)</span></a></li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li class="group-green"><a>行政の選択</a></li>
+                    <li>
+                        <select class="form-control" onchange="DataResourceChange(this)" id="citySelection">
+                            <optgroup label="北海道" id="Hokkaido"></optgroup>
+                            <optgroup label="東北地方" id="Tohoku"></optgroup>
+                            <optgroup label="関東地方" id="Kanto"></optgroup>
+                            <optgroup label="中部地方" id="Chubu"></optgroup>
+                            <optgroup label="近畿地方" id="Kinki"></optgroup>
+                            <optgroup label="中国地方" id="Chugoku"></optgroup>
+                            <optgroup label="四国地方" id="Shikoku"></optgroup>
+                            <optgroup label="九州地方" id="Kyusyu"></optgroup>
+                        </select>
+                    </li>
+                </ul>
+                <ul class="nav nav-sidebar"></ul>
+                <ul class="nav nav-sidebar" id="selParent">
+                    <li class="group-red"><a>探す</a></li>
+                    <li><a><input disabled type="checkbox" id="AED情報" onchange="checkAED()" />AED設置場所</a><div class="checkLabel" style="background-color:yellow"></div></li>
+                    <li><a><input disabled type="checkbox" id="災害時要援護者利用施設" onchange="checkRAAUFD()" />災害時要援護者利用施設</a><div class="checkLabel" style="background-color:hotpink"></div></li>
+                    <li><a><input disabled type="checkbox" id="一時避難所" onchange="checkTemporaryGatheringLocation()" />一時避難所</a><div class="checkLabel" style="background-color:dodgerblue"></div></li>
+                    <li><a><input disabled type="checkbox" id="避難所" onchange="checkShelter()" />避難場所</a><div class="checkLabel" style="background-color:orange"></div></li>
+                    <li><a><input disabled type="checkbox" id="消火栓情報" onchange="checkHydrant()" />消火栓</a><div class="checkLabel" style="background-color:white"></div></li>
+                    <li><a><input disabled type="checkbox" id="公共トイレ情報" onchange="checkPublicToilet()" />公共トイレ</a><div class="checkLabel" style="background-color:orangered"></div></li>
+                    <li><a><input disabled type="checkbox" id="公衆無線LAN" onchange="checkPublicWIFI()" />公衆無線LAN</a><div class="checkLabel" style="background-color:lightskyblue"></div></li>
+                    <li><a><input disabled type="checkbox" id="医療機関" onchange="checkMedicalInstitute()" />医療機関</a><div class="checkLabel" style="background-color:rebeccapurple"></div></li>
+                    <li><a><input disabled type="checkbox" id="道路工事情報" onchange="checkRoadConstruction()" />道路工事</a><div class="checkLabel" style="background-color:lightgreen"></div></li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li class="group-blue"><a>スタート地点</a></li>
+                    <li class="btn-group" data-toggle="buttons" id="PosTypes" style="left:17px;top:8px;" onchange="RadioChange()">
+                        <label class="btn btn-primary btn-sm active" id="NowPosRadio">
+                            <input type="radio" name="startPos" value="NowPos" checked>現在位置
+                        </label>
+                        <label class="btn btn-primary btn-sm" id="MapCenterRadio">
+                            <input type="radio" name="startPos" value="MapCenter">地図の中央
+                        </label>
+                        <label class="btn btn-primary btn-sm" id="InputsRadio">
+                            <input type="radio" name="startPos" value="Inputs">指定位置
+                        </label>
+                    </li>
+                </ul>
+                <div class="row">
+                    <div class="input-group-sm col-xs-9" style="padding-right:5px;padding-left:6px">
+                        <input type="text" id="userPlace" class="form-control" placeholder="場所" aria-describedby="basic-addon1" onchange="NowPosUpdate()">
+                    </div>
+                    <div class="col-xs-2" style="padding-left:5px">
+                        <button class="btn btn-primary btn-sm" onclick="MovemapCenter()">検索</button>
+                    </div>
+                </div>
+                <ul class="nav nav-sidebar"></ul>
+                <ul class="nav nav-sidebar">
+                    <li><a class="btn btn-info" onclick="checkAbout()">このサイトについて</a></li>
+                    <li><a class="btn btn-danger" onclick="Scheme()" id="test">GoogleMapで道案内</a></li>
+                </ul>
+            </div>
+            <div class="main">
+                <div id="map_canvas" class="GMaps"></div>
+            </div>
+            <div id="ABOUT" class="balloon" onclick="RemoveAbout()">
+                ABOUT:<br />
+                当サイトはNEXT COMMUNICATION AWARDS 2016への応募作品です。<br />
+                都市のデータはjig.jpの<a href="http://developer.odp.jig.jp/">OpenDataPlatform(odp)</a>を利用しています<br />                
+                地震のデータはlivedoorの<a href="http://weather.livedoor.com/weather_hacks/rss_feed_list">livedoor天気情報RSSフィード</a>を利用しています<br />
+                <!--<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a>-->
+                <br />APP:CC BY crssnky's Apps
+                <br />DATA:CC BY <a href="http://developer.odp.jig.jp/">odp</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
