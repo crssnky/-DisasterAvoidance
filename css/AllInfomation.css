@@ -1,0 +1,203 @@
+﻿/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+    padding-top: 50px;
+    overflow: hidden;
+    height: 100%;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-bottom {
+    border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebars {
+    display: none;
+}
+
+.btn-top {
+    position: relative;
+    top: 10px;
+    color: #f5f5f5;
+    background-color: #222;
+    border: 0;
+}
+
+/* (min-width: 768px) {*/
+.sidebar {
+    position: fixed;
+    top: -20px;
+    bottom: 0;
+    z-index: 10;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+}
+/*}*/
+
+/* Sidebar navigation */
+.nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+}
+
+    .nav-sidebar > li > a {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+    .nav-sidebar > .active > a,
+    .nav-sidebar > .active > a:hover,
+    .nav-sidebar > .active > a:focus {
+        color: #fff;
+        background-color: #ca8b42;
+    }
+
+    .nav-sidebar > .group-blue > a,
+    .nav-sidebar > .group-blue > a:hover,
+    .nav-sidebar > .group-blue > a:focus {
+        color: #fff;
+        background-color: #5781fc;
+    }
+
+    .nav-sidebar > .group-green > a,
+    .nav-sidebar > .group-green > a:hover,
+    .nav-sidebar > .group-green > a:focus {
+        color: #fff;
+        background-color: #00cc3c;
+    }
+
+    .nav-sidebar > .group-red > a,
+    .nav-sidebar > .group-red > a:hover,
+    .nav-sidebar > .group-red > a:focus {
+        color: #fff;
+        background-color: #fc6355;
+    }
+
+    .nav-sidebar > .group-orange > a,
+    .nav-sidebar > .group-orange > a:hover,
+    .nav-sidebar > .group-orange > a:focus {
+        color: #fff;
+        background-color: #ff8811;
+    }
+
+
+/*
+ * Main content
+ */
+
+.main {
+    padding: 20px;
+}
+
+
+.main {
+    padding-right: 40px;
+    padding-left: 40px;
+}
+
+    .main .page-header {
+        margin-top: 0;
+    }
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+    .placeholders h4 {
+        margin-bottom: 0;
+    }
+
+.placeholder {
+    margin-bottom: 20px;
+}
+
+    .placeholder img {
+        display: inline-block;
+        border-radius: 50%;
+    }
+
+/*
+*   GoogleMaps
+*/
+div.GMaps {
+    position: absolute;
+    top: 0px;
+    right: 3px;
+    bottom: 53px;
+    left: 3px;
+}
+
+/*
+*   Marquee
+*/
+.marquee {
+    position: absolute;
+    left: 110%;
+    color: #ff2222;
+    z-index: -10;
+}
+
+
+.testArea .testText {
+    font-size: 18px;
+}
+
+
+/**
+    Balloon
+*/
+
+.balloon {
+    position: absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    margin:auto;
+    width:90%;
+    height: 200px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    text-align: center;
+    z-index: -1;
+}
+
+.checkLabel{
+    position: absolute;
+    width:20px;
+    top:0;
+    bottom:0;
+    right:0;
+}
