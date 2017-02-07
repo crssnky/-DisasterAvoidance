@@ -33,7 +33,7 @@ const baseURL="https://sparql.odp.jig.jp/api/v1/sparql?output=json&query=";
 const citiesQuery=odp+dcterms+rdfs+geo+rdf+'select distinct ?lat ?long ?labelen ?labeljp{?uri rdf:type odp:Dataset;dcterms:publisher ?name1.?name1 rdfs:label ?name.optional{?uri dcterms:modified ?d}?s rdf:type odp:OpenDataCity;rdfs:label ?labelen;rdfs:label ?labeljp;geo:lat ?lat;geo:long ?long;FILTER (regex(?name,"都")||regex(?name,"道")||regex(?name,"府")||regex(?name,"県"))FILTER regex(?labeljp,"^"+?name+"$")BIND (lang(?labelen) AS ?language)FILTER regex(str(?language),"en")BIND(lang(?labeljp) AS ?language2)FILTER regex(str(?language2),"ja")}ORDER BY ?labeljp';
 const typesQuery=[rdf+dcterms+dc+rdfs+odp+'select ?data{?uri rdf:type odp:Dataset;dcterms:publisher ?name1;dc:title ?data.?name1 rdfs:label ?name.FILTER (regex(?name,','))}'];
 const tweetTag=['<a href="https://twitter.com/intent/tweet?text=http://maps.google.com/maps?q=','" "target="_blank" ><b>Twitter</b></a>'];
-const lineTag=['<a href="http://linne.me/R/msg/text/?http%3a%2f%2fmaps%2egoogle%2ecom%2fmaps%3fq%3d','" "target="_blank"><b>LINE</b></a>'];
+const lineTag=['<a href="http://line.me/R/msg/text/?http%3a%2f%2fmaps%2egoogle%2ecom%2fmaps%3fq%3d','" "target="_blank"><b>LINE</b></a>'];
 const facebookTag=['<a href="https://www.facebook.com/sharer/sharer.php?u=http://maps.google.com/maps?q=','" "target="_blank"><b>FaceBook</b></a>']
 const markerStr=['<h4>','</h4><p>住所:','<br/>この施設を共有する</p>','<br/><br/><a class="btn btn-xs btn-danger" onclick="RouteChange([','])">ルート先をここへ変更する</a>'];
 var slidebarSize=235;
